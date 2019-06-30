@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.172-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:id="mainBorderPane"
+            fx:controller="com.arnasRad.todoList.Controller">
+    <top>
+        <MenuBar>
+            <Menu text="File">
+                <items>
+                    <MenuItem text="New..." onAction="#showNewItemDialog"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Exit"/>
+                </items>
+            </Menu>
+        </MenuBar>
+    </top>
+
+    <left>
+        <ListView fx:id="todoListView" onMouseClicked="#handleClickListView">
+
+        </ListView>
+    </left>
+
+    <center>
+      <VBox style="-fx-background-color: white">
+         <children>
+              <TextArea fx:id="itemDetailsTextArea" VBox.vgrow="ALWAYS" wrapText="true"/>
+             <HBox>
+                 <Label text="Due: " style="-fx-background-color: white">
+                     <font>
+                         <Font name="Times New Roman bold" size = "20" />
+                     </font>
+                 </Label>
+                 <Label fx:id="deadlineLabel" style="-fx-background-color: white">
+                     <font>
+                         <Font name="Times New Roman bold" size = "20" />
+                     </font>
+                 </Label>
+             </HBox>
+         </children>
+      </VBox>
+    </center>
+</BorderPane>
