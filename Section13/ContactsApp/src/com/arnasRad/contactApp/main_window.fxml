@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arnasRad.contactApp.Controller">
+<BorderPane fx:id="mainBorderPane" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arnasRad.contactApp.Controller">
    <center>
        <TableView fx:id="contactsTableView">
          <columns>
@@ -31,7 +31,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-                  <MenuItem mnemonicParsing="false" text="New..." />
+                  <MenuItem mnemonicParsing="false" onAction="#showNewItemDialog" text="New..." />
                   <MenuItem mnemonicParsing="false" text="Edit" />
               <MenuItem mnemonicParsing="false" text="Delete" />
             </items>
