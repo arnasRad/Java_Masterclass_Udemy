@@ -77,6 +77,7 @@ public class Controller {
 //
 //        TodoData.getInstance().setTodoItems(todoItems);
 
+        // create a context menu
         listContextMenu = new ContextMenu();
         MenuItem deleteMenuItem = new MenuItem("Delete");
         deleteMenuItem.setOnAction(new EventHandler<ActionEvent>() {
@@ -151,6 +152,7 @@ public class Controller {
                     }
                 };
 
+                // add context menu to list cells
                 cell.emptyProperty().addListener(
                         (obs, wasEmpty, isNowEmpty) -> {
                                 if(isNowEmpty) {

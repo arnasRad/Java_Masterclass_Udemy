@@ -24,8 +24,9 @@ public class Controller {
 
         ObservableList<Contact> tableValues = FXCollections.observableArrayList();
 
+
+
         contactsTableView.setItems(tableValues);
-        addContact(new Contact("Arnas", "Radzevicius", "862537168", "personal contact"));
     }
 
     public ObservableList<Contact> getContactValues() {
