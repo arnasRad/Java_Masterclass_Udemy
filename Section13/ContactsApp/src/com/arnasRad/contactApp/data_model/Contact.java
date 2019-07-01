@@ -1,4 +1,4 @@
-package sample.data_model;
+package com.arnasRad.contactApp.data_model;
 
 import javafx.beans.property.SimpleStringProperty;
 

@@ -1,4 +1,4 @@
-package sample;
+package com.arnasRad.contactApp;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import sample.data_model.Contact;
+import com.arnasRad.contactApp.data_model.Contact;
 
 public class Controller {
     @FXML TableView<Contact> contactsTableView;
