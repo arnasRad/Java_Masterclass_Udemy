@@ -2,17 +2,15 @@ package com.arnasRad.contactApp;
 
 import com.arnasRad.contactApp.data_model.ContactData;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import com.arnasRad.contactApp.data_model.Contact;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
@@ -28,6 +26,8 @@ public class Controller {
 
     @FXML
     private BorderPane mainBorderPane;
+    @FXML
+    private ContextMenu listContextMenu;
 
     public void initialize() {
         firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstNameCol"));
@@ -35,7 +35,7 @@ public class Controller {
         phoneNumberCol.setCellValueFactory(new PropertyValueFactory<>("phoneNumberCol"));
         notesCol.setCellValueFactory(new PropertyValueFactory<>("notesCol"));
 
-        ObservableList<Contact> tableValues = FXCollections.observableArrayList();
+//        ObservableList<Contact> tableValues = FXCollections.observableArrayList();
 
         SortedList<Contact> sortedList = new SortedList<>(
                 ContactData.getInstance().getContacts(),
@@ -46,15 +46,11 @@ public class Controller {
                     }
                 });
 
-        contactsTableView.setItems(tableValues);
+        contactsTableView.setItems(sortedList);
     }
 
     public ObservableList<Contact> getContactValues() {
         return this.contactsTableView.getItems();
-    }
-
-    public void addContact(Contact contact) {
-        getContactValues().add(contact);
     }
 
     @FXML
@@ -83,10 +79,40 @@ public class Controller {
 
         Optional<ButtonType> result = dialog.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.OK) {
-            DialogController controller = fxmlLoader.getController();
+            NewDialogController controller = fxmlLoader.getController();
             Contact newItem = controller.processResults();
 //            todoListView.getItems().setAll(TodoData.getInstance().getTodoItems());
             contactsTableView.getSelectionModel().select(newItem);
+        }
+    }
+
+    @FXML
+    public void deleteContactItem() {
+        Contact selectedItem = contactsTableView.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            deleteItem(selectedItem);
+        }
+    }
+
+    @FXML
+    public void handleKeyPressed(KeyEvent keyEvent) {
+        Contact selectedItem = contactsTableView.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            if (keyEvent.getCode().equals(KeyCode.DELETE)) {
+                deleteItem(selectedItem);
+            }
+        }
+    }
+
+    public void deleteItem(Contact item) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Contact");
+        alert.setHeaderText("Delete contact " + item.getFirstNameCol() + " " + item.getLastNameCol());
+        alert.setContentText("Are you sure? Press OK to confirm, or cancel to Back out.");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && (result.get() == ButtonType.OK)) {
+            ContactData.getInstance().deleteContact(item);
         }
     }
 }
