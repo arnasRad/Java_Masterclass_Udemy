@@ -1,14 +1,13 @@
 package com.arnasRad.contactApp;
 
+import com.arnasRad.contactApp.data_model.Contact;
 import com.arnasRad.contactApp.data_model.ContactData;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import com.arnasRad.contactApp.data_model.Contact;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
