@@ -16,16 +16,14 @@ import java.util.Iterator;
 public class ContactData {
     private static ContactData instance = new ContactData();
     private static String filename = "ContactItems.txt";
-
     private ObservableList<Contact> contacts;
-    private DateTimeFormatter formatter;
 
     public static ContactData getInstance() {
         return instance;
     }
 
     private ContactData() {
-        formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
     }
 
     public ObservableList<Contact> getContacts() {
@@ -34,6 +32,18 @@ public class ContactData {
 
     public void addContact(Contact contact) {
         this.contacts.add(contact);
+    }
+
+    public void deleteContact(Contact contact) {
+        contacts.remove(contact);
+    }
+
+    public void editContact(Contact contact, String firstName, String lastName,
+                            String phoneNumber, String notes) {
+        contact.setFirstNameCol(firstName);
+        contact.setLastNameCol(lastName);
+        contact.setPhoneNumberCol(phoneNumber);
+        contact.setNotesCol(notes);
     }
 
     public void loadContacts() throws IOException {
@@ -52,7 +62,7 @@ public class ContactData {
                 String phoneNumber = itemPieces[2];
                 String notes = itemPieces[3];
 
-                contacts.add(new Contact(firstName, lastName, phoneNumber, notes));
+                addContact(new Contact(firstName, lastName, phoneNumber, notes));
             }
         } finally {
             if (br != null) {
@@ -81,9 +91,5 @@ public class ContactData {
                 bw.close();
             }
         }
-    }
-
-    public void deleteContact(Contact contact) {
-        contacts.remove(contact);
     }
 }

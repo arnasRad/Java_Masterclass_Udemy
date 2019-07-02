@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Text?>
 <DialogPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.arnasRad.contactApp.NewDialogController"
+            fx:controller="com.arnasRad.contactApp.DialogController"
             prefHeight="400.0" prefWidth="600.0">
     <content>
         <GridPane vgap="10" hgap="10">
