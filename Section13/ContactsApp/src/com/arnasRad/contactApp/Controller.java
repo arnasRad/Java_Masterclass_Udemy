@@ -7,7 +7,6 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -18,10 +17,6 @@ import java.util.Optional;
 
 public class Controller {
     @FXML TableView<Contact> contactsTableView;
-    @FXML TableColumn<Contact, String> firstNameCol;
-    @FXML TableColumn<Contact, String> lastNameCol;
-    @FXML TableColumn<Contact, String> phoneNumberCol;
-    @FXML TableColumn<Contact, String> notesCol;
 
     @FXML
     private BorderPane mainBorderPane;
@@ -29,11 +24,6 @@ public class Controller {
     private ContextMenu listContextMenu;
 
     public void initialize() {
-        firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstNameCol"));
-        lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastNameCol"));
-        phoneNumberCol.setCellValueFactory(new PropertyValueFactory<>("phoneNumberCol"));
-        notesCol.setCellValueFactory(new PropertyValueFactory<>("notesCol"));
-
 //        ObservableList<Contact> tableValues = FXCollections.observableArrayList();
 
         SortedList<Contact> sortedList = new SortedList<>(
@@ -41,7 +31,7 @@ public class Controller {
                 new Comparator<Contact>() {
                     @Override
                     public int compare(Contact o1, Contact o2) {
-                        return o1.getLastNameCol().compareTo(o2.getLastNameCol());
+                        return o1.getLastName().compareTo(o2.getLastName());
                     }
                 });
 
@@ -109,10 +99,10 @@ public class Controller {
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
 
-        controller.setFirstNameField(selectedContact.getFirstNameCol());
-        controller.setLastNameField(selectedContact.getLastNameCol());
-        controller.setPhoneNumberField(selectedContact.getPhoneNumberCol());
-        controller.setNotesField(selectedContact.getNotesCol());
+        controller.setFirstNameField(selectedContact.getFirstName());
+        controller.setLastNameField(selectedContact.getLastName());
+        controller.setPhoneNumberField(selectedContact.getPhoneNumber());
+        controller.setNotesField(selectedContact.getNotes());
 
         Optional<ButtonType> result = dialog.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.OK) {
@@ -142,7 +132,7 @@ public class Controller {
     public void deleteItem(Contact item) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete Contact");
-        alert.setHeaderText("Delete contact " + item.getFirstNameCol() + " " + item.getLastNameCol());
+        alert.setHeaderText("Delete contact " + item.getFirstName() + " " + item.getLastName());
         alert.setContentText("Are you sure? Press OK to confirm, or cancel to Back out.");
         Optional<ButtonType> result = alert.showAndWait();
 

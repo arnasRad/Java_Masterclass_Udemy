@@ -39,10 +39,10 @@ public class ContactData {
 
     public void editContact(Contact contact, String firstName, String lastName,
                             String phoneNumber, String notes) {
-        contact.setFirstNameCol(firstName);
-        contact.setLastNameCol(lastName);
-        contact.setPhoneNumberCol(phoneNumber);
-        contact.setNotesCol(notes);
+        contact.setFirstName(firstName);
+        contact.setLastName(lastName);
+        contact.setPhoneNumber(phoneNumber);
+        contact.setNotes(notes);
     }
 
     public void loadContacts() throws IOException {
@@ -79,10 +79,10 @@ public class ContactData {
                 Contact contact = iter.next();
 
                 bw.write(String.format("%s\t%s\t%s\t%s",
-                        getNonBlankText(contact.getFirstNameCol()),
-                        getNonBlankText(contact.getLastNameCol()),
-                        getNonBlankText(contact.getPhoneNumberCol()),
-                        getNonBlankText(contact.getNotesCol())));
+                        getNonBlankText(contact.getFirstName()),
+                        getNonBlankText(contact.getLastName()),
+                        getNonBlankText(contact.getPhoneNumber()),
+                        getNonBlankText(contact.getNotes())));
                 bw.newLine();
             }
         } finally {

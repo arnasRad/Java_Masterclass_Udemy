@@ -3,63 +3,63 @@ package com.arnasRad.contactApp.data_model;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Contact {
-    private SimpleStringProperty firstNameCol;
-    private SimpleStringProperty lastNameCol;
-    private SimpleStringProperty phoneNumberCol;
-    private SimpleStringProperty notesCol;
+    private SimpleStringProperty firstName;
+    private SimpleStringProperty lastName;
+    private SimpleStringProperty phoneNumber;
+    private SimpleStringProperty notes;
 
     public Contact(String firstName, String lastName, String phoneNumber, String notes) {
-        this.firstNameCol = new SimpleStringProperty(firstName);
-        this.lastNameCol = new SimpleStringProperty(lastName);
-        this.phoneNumberCol = new SimpleStringProperty(phoneNumber);
-        this.notesCol = new SimpleStringProperty(notes);
+        this.firstName = new SimpleStringProperty(firstName);
+        this.lastName = new SimpleStringProperty(lastName);
+        this.phoneNumber = new SimpleStringProperty(phoneNumber);
+        this.notes = new SimpleStringProperty(notes);
     }
 
-    public String getFirstNameCol() {
-        return firstNameCol.get();
+    public String getFirstName() {
+        return firstName.get();
     }
 
-    public SimpleStringProperty firstNameColProperty() {
-        return firstNameCol;
+    public SimpleStringProperty firstNameProperty() {
+        return firstName;
     }
 
-    public void setFirstNameCol(String firstNameCol) {
-        this.firstNameCol.set(firstNameCol);
+    public void setFirstName(String firstName) {
+        this.firstName.set(firstName);
     }
 
-    public String getLastNameCol() {
-        return lastNameCol.get();
+    public String getLastName() {
+        return lastName.get();
     }
 
-    public SimpleStringProperty lastNameColProperty() {
-        return lastNameCol;
+    public SimpleStringProperty lastNameProperty() {
+        return lastName;
     }
 
-    public void setLastNameCol(String lastNameCol) {
-        this.lastNameCol.set(lastNameCol);
+    public void setLastName(String lastName) {
+        this.lastName.set(lastName);
     }
 
-    public String getPhoneNumberCol() {
-        return phoneNumberCol.get();
+    public String getPhoneNumber() {
+        return phoneNumber.get();
     }
 
-    public SimpleStringProperty phoneNumberColProperty() {
-        return phoneNumberCol;
+    public SimpleStringProperty phoneNumberProperty() {
+        return phoneNumber;
     }
 
-    public void setPhoneNumberCol(String phoneNumberCol) {
-        this.phoneNumberCol.set(phoneNumberCol);
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber.set(phoneNumber);
     }
 
-    public String getNotesCol() {
-        return notesCol.get();
+    public String getNotes() {
+        return notes.get();
     }
 
-    public SimpleStringProperty notesColProperty() {
-        return notesCol;
+    public SimpleStringProperty notesProperty() {
+        return notes;
     }
 
-    public void setNotesCol(String notesCol) {
-        this.notesCol.set(notesCol);
+    public void setNotes(String notes) {
+        this.notes.set(notes);
     }
 }
