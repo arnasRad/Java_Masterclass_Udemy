@@ -47,11 +47,13 @@ public class Controller {
                 });
 
         contactsTableView.setItems(sortedList);
+        contactsTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        contactsTableView.getSelectionModel().selectFirst();
     }
 
-    public ObservableList<Contact> getContactValues() {
-        return this.contactsTableView.getItems();
-    }
+//    public ObservableList<Contact> getContactValues() {
+//        return this.contactsTableView.getItems();
+//    }
 
     @FXML
     public void handleExit() {
