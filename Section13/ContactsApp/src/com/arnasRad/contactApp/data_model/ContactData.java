@@ -57,33 +57,11 @@ public class ContactData {
             while((input = br.readLine()) != null) {
                 String[] itemPieces = input.split("\t");
 
-                String firstName;
-                String lastName;
-                String phoneNumber;
-                String notes;
-
-                if(!itemPieces[0].equals("$blank")) {
-                    firstName = itemPieces[0];
-                } else {
-                    firstName = "";
-                }
-                if(!itemPieces[1].equals("$blank")) {
-                    lastName = itemPieces[1];
-                } else {
-                    lastName = "";
-                }
-                if(!itemPieces[2].equals("$blank")) {
-                    phoneNumber = itemPieces[2];
-                } else {
-                    phoneNumber = "";
-                }
-                if(!itemPieces[3].equals("$blank")) {
-                    notes = itemPieces[3];
-                } else {
-                    notes = "";
-                }
-
-                addContact(new Contact(firstName, lastName, phoneNumber, notes));
+                addContact(new Contact(
+                        getEmptyTextIfBlank(itemPieces[0]),
+                        getEmptyTextIfBlank(itemPieces[1]),
+                        getEmptyTextIfBlank(itemPieces[2]),
+                        getEmptyTextIfBlank(itemPieces[3])));
             }
         } finally {
             if (br != null) {
@@ -96,45 +74,38 @@ public class ContactData {
         Path path = Paths.get(filename);
         BufferedWriter bw = Files.newBufferedWriter(path);
 
-        String firstName;
-        String lastName;
-        String phoneNumber;
-        String notes;
-
         try {
             Iterator<Contact> iter = contacts.iterator();
             while(((Iterator) iter).hasNext()) {
                 Contact contact = iter.next();
 
-                // in case empty values were entered in table fields
-                firstName = contact.getFirstNameCol();
-                if (firstName.equals("")) {
-                    firstName = "$blank";
-                }
-                lastName = contact.getLastNameCol();
-                if (lastName.equals("")) {
-                    lastName = "$blank";
-                }
-                phoneNumber = contact.getPhoneNumberCol();
-                if (phoneNumber.equals("")) {
-                    phoneNumber = "$blank";
-                }
-                notes = contact.getNotesCol();
-                if (notes.equals("")) {
-                    notes = "$blank";
-                }
-
                 bw.write(String.format("%s\t%s\t%s\t%s",
-                        firstName,
-                        lastName,
-                        phoneNumber,
-                        notes));
+                        getNonBlankText(contact.getFirstNameCol()),
+                        getNonBlankText(contact.getLastNameCol()),
+                        getNonBlankText(contact.getPhoneNumberCol()),
+                        getNonBlankText(contact.getNotesCol())));
                 bw.newLine();
             }
         } finally {
             if (bw != null) {
                 bw.close();
             }
+        }
+    }
+
+    private String getNonBlankText(String text) {
+        if (!text.equals("")) {
+            return text;
+        } else {
+            return "$blank";
+        }
+    }
+
+    private String getEmptyTextIfBlank(String text) {
+        if(!text.equals("$blank")) {
+            return text;
+        } else {
+            return("");
         }
     }
 }
