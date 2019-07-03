@@ -11,6 +11,7 @@ public class Location implements Serializable {
     private final String description;
     private final Map<String, Integer> exits;
 
+    // when this is commented out program crashes when trying to recompile
     private long serialVersionUID = 1L;
 
     public Location(int locationID, String description, Map<String, Integer> exits) {
