@@ -23,7 +23,6 @@ public class Locations implements Map<Integer, Location> {
 
 
     static {
-
         try(ObjectInputStream locFile = new ObjectInputStream(new BufferedInputStream(new FileInputStream("locations.dat")))) {
             boolean eof = false;
             while (!eof) {
