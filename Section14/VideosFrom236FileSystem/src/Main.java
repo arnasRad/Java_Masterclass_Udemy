@@ -26,6 +26,7 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
+        // GOOD PRACTICE: not to hardcore separators
         String separator = File.separator;
         System.out.println(separator);
         separator = FileSystems.getDefault().getSeparator();
