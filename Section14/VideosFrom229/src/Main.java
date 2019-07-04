@@ -12,7 +12,11 @@ public class Main {
             FileChannel binChannel = binFile.getChannel()) {
 
             byte[] outputBytes = "Hello World!".getBytes();
-            ByteBuffer buffer = ByteBuffer.wrap(outputBytes);
+//            ByteBuffer buffer = ByteBuffer.wrap(outputBytes);
+            ByteBuffer buffer = ByteBuffer.allocate(outputBytes.length);
+            buffer.put(outputBytes);
+            buffer.flip();
+
             int numBytes = binChannel.write(buffer);
             System.out.println("numBytes written was: " + numBytes);
 
@@ -36,6 +40,7 @@ public class Main {
             long numBytesRead = channel.read(buffer);
             if(buffer.hasArray()) {
                 System.out.println("byte buffer = " + new String(buffer.array()));
+//                System.out.println("byte buffer = " + new String(outputBytes));
             }
 
             // Absolute read
@@ -44,8 +49,9 @@ public class Main {
             System.out.println(intBuffer.getInt(0));
             intBuffer.flip();
             numBytesRead = channel.read(intBuffer);
+            intBuffer.flip();
             System.out.println(intBuffer.getInt(0));
-
+            System.out.println(intBuffer.getInt());
 
             // Relative read
             //            intBuffer.flip();
