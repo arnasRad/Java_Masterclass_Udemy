@@ -1,10 +1,15 @@
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class BankAccount {
+    private final Lock lock;
     private double balance;
     private String accountNumber;
 
     public BankAccount(double balance, String accountNumber) {
         this.balance = balance;
         this.accountNumber = accountNumber;
+        this.lock = new ReentrantLock();
     }
 
 //    public synchronized void deposit(double amount) {
@@ -18,17 +23,23 @@ public class BankAccount {
 //    }
 
     public void deposit(double amount) {
-        synchronized (this) {
+        lock.lock();
+        try {
             balance += amount;
+            System.out.println(amount + " deposited. Current account balance: " + balance);
+        } finally {
+            lock.unlock();
         }
-        System.out.println(amount + " deposited. Current account balance: " + balance);
     }
 
     public void withdraw(double amount) {
-        synchronized (this) {
+        lock.lock();
+        try {
             balance -= amount;
+            System.out.println(amount + " withdrawn. Current account balance: " + balance);
+        } finally {
+            lock.unlock();
         }
-        System.out.println(amount + " withdrawn. Current account balance: " + balance);
     }
 
     public String getAccountNumber() {
