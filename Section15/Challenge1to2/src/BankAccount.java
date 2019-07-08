@@ -24,11 +24,14 @@ public class BankAccount {
 //    }
 
     public void deposit(double amount) {
+        boolean status = false;
+
         try {
             if (lock.tryLock(1, TimeUnit.SECONDS)) {
                 try {
                     balance += amount;
                     System.out.println(amount + " deposited. Current account balance: " + balance);
+                    status = true;
                 } finally {
                     lock.unlock();
                 }
@@ -38,6 +41,8 @@ public class BankAccount {
         } catch (InterruptedException e) {
             e.getMessage();
         }
+
+        System.out.println("Transaction status = " + status);
 
         /* challenge #4 */
 //        lock.lock();
@@ -50,11 +55,14 @@ public class BankAccount {
     }
 
     public void withdraw(double amount) {
+        boolean status = false;
+
         try {
             if (lock.tryLock(1, TimeUnit.SECONDS)) {
                 try {
                     balance -= amount;
                     System.out.println(amount + " withdrawn. Current account balance: " + balance);
+                    status = true;
                 } finally {
                     lock.unlock();
                 }
@@ -64,6 +72,8 @@ public class BankAccount {
         } catch (InterruptedException e) {
             e.getMessage();
         }
+
+        System.out.println("Transaction status = " + status);
 
 //        lock.lock();
 //        try {
