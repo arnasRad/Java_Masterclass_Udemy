@@ -51,7 +51,7 @@ class NewBankAccount {
                 } catch (InterruptedException e) {
                     e.getMessage();
                 }
-                
+
                 balance += amount;
                 System.out.printf("%s: Deposited %f\n", Thread.currentThread().getName(), amount);
 
