@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class Main {
@@ -54,7 +53,7 @@ public class Main {
         /* #6 */
 //        String sillyString = doStringStuff(new UpperConcat() {
 //            @Override
-//            public String uperAndConcat(String s1, String s2) {
+//            public String upperAndConcat(String s1, String s2) {
 //                return s1.toUpperCase() + s2.toUpperCase();
 //            }
 //        },
@@ -62,14 +61,29 @@ public class Main {
 //        System.out.println(sillyString);
 
         /* #7 */
-        UpperConcat uc = (s1, s2) -> s1.toUpperCase() + s2.toUpperCase();
+//        UpperConcat uc = (s1, s2) -> s1.toUpperCase() + s2.toUpperCase();
+//        String sillyString = doStringStuff(uc,
+//                employees.get(0).getName(), employees.get(1).getName());
+//        System.out.println(sillyString);
+
+        /* #8 */
+        UpperConcat uc = (s1, s2) -> {
+            String result = s1.toUpperCase() + s2.toUpperCase();
+            return result;
+        };
         String sillyString = doStringStuff(uc,
                 employees.get(0).getName(), employees.get(1).getName());
         System.out.println(sillyString);
+        System.out.println();
+
+        /* #9 */
+        AnotherClass anotherClass = new AnotherClass();
+        String s = anotherClass.doSomething();
+        System.out.println(s);
     }
 
     public final static String doStringStuff(UpperConcat uc, String s1, String s2) {
-        return uc.uperAndConcat(s1, s2);
+        return uc.upperAndConcat(s1, s2);
     }
 }
 
@@ -107,5 +121,56 @@ class Employee {
 }
 
 interface UpperConcat {
-    public String uperAndConcat(String s1, String s2);
+    public String upperAndConcat(String s1, String s2);
+}
+
+class AnotherClass {
+    public String doSomething() {
+//        UpperConcat uc = (s1, s2) -> {
+//            /* lambda is not an anonymous class. Expression is treated as a nested block of code
+//            and has the same scope as the nested block */
+//            System.out.println("The lambda expression's class is " + getClass().getSimpleName());
+//            String result = s1.toUpperCase() + s2.toUpperCase();
+//            return result;
+//        };
+
+//        final int i = 0;
+//        {
+//            UpperConcat uc = new UpperConcat() {
+//                @Override
+//                public String upperAndConcat(String s1, String s2) {
+//                    System.out.println("i (within anonymous class) + " + i); // i needs to be final
+//                    return s1.toUpperCase() + s2.toUpperCase();
+//                }
+//            };
+//            System.out.println("The AnotherClass class's name is " + getClass().getSimpleName());
+//
+////            ++i;
+//            System.out.println("i = " + i);
+//            return Main.doStringStuff(uc, "String1", "String2");
+//        }
+
+        int i = 0;
+        UpperConcat uc = (s1, s2) -> {
+            System.out.println("The lambda expression's class is " + getClass().getSimpleName());
+            String result = s1.toUpperCase() + s2.toUpperCase();
+            return result;
+        };
+            System.out.println("The AnotherClass class's name is " + getClass().getSimpleName());
+            return Main.doStringStuff(uc, "String1", "String2");
+
+
+
+//        System.out.println("The AnotherClass class's name is " + getClass().getSimpleName());
+//        return Main.doStringStuff(uc, "String1", "String2");
+
+//        System.out.println("The AnotherClass's name is: " + getClass().getSimpleName());
+//        return Main.doStringStuff(new UpperConcat() {
+//            @Override
+//            public String upperAndConcat(String s1, String s2) {
+//                System.out.println("The anonymous class's name is: " + getClass().getSimpleName());
+//                return s1.toUpperCase() + s2.toUpperCase();
+//            }
+//        }, "String1", "String2");
+    }
 }
