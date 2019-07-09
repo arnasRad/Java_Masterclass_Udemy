@@ -24,10 +24,16 @@ public class Challenge9 {
 }
 
 class NewTutor {
+    private boolean waiting;
     private NewStudent student;
 
     public void setStudent(NewStudent student) {
+        this.waiting = false;
         this.student = student;
+    }
+
+    public boolean isWaiting() {
+        return this.waiting;
     }
 
     public void studyTime() {
@@ -37,7 +43,9 @@ class NewTutor {
             if (!student.hasArrived()) {    // wait for the student only if it has not arrived yet
                 try {
                     // wait for student to arrive
+                    this.waiting = true;    // tutor is waiting for the student
                     this.wait(); // release the tutor lock, it will re-lock once it has woken up
+                    this.waiting = false;   // tutor is no longer waiting for the student
                 } catch (InterruptedException e) {
 
                 }
@@ -79,7 +87,12 @@ class NewStudent {
             synchronized (this) {
                 System.out.println("Student handed in assignment");
                 this.arrived = true;    // set student status to 'arrived'
-                tutor.notifyAll();
+
+                // notify tutor only if it was waiting for the student
+                // there is no need to notify otherwise
+                if (tutor.isWaiting()) {
+                    tutor.notifyAll();      // notify the tutor that the student has arrived
+                }
             }
         }
     }
