@@ -37,7 +37,12 @@ public class Main {
         employees.add(jack);
         employees.add(snow);
 
-        Collections.sort(employees, (Employee employee1, Employee employee2) ->
+//        Collections.sort(employees, (Employee employee1, Employee employee2) ->
+//                employee1.getName().compareTo(employee2.getName())
+//        );
+
+        // possible to leave-out parapeter types if they're the same
+        Collections.sort(employees, (employee1, employee2) ->
                 employee1.getName().compareTo(employee2.getName())
         );
 
