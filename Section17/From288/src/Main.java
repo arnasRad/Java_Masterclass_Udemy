@@ -115,5 +115,52 @@ public class Main {
         while(h2TextMatcher.find()) {
             System.out.println("Occurrence " + h2TextMatcher.group(2));
         }
+
+        // Video 292 And, Or & Not
+
+        // "abc" "a" and "b" and "c"
+        // [[Hh]arry
+        System.out.println("harry".replaceAll("[H|h]arry", "Larry"));
+        System.out.println("Harry".replaceAll("[H|h]arry", "Larry"));
+
+        // [^abc]
+        String tvTest = "tstvtkt";
+//        String tNotVRegExp = "t[^v]";
+        String tNotVRegExp = "t(?!v)"; // look-ahead syntax
+//        String tNotVRegExp = "t(?=v)"; // positive look-ahead
+        Pattern tNotVPattern = Pattern.compile(tNotVRegExp);
+        Matcher tNotVMatcher = tNotVPattern.matcher(tvTest);
+
+        count = 0;
+        while(tNotVMatcher.find()) {
+            count++;
+            System.out.println("Occurrence " + count + " : " + tNotVMatcher.start() + " to " + tNotVMatcher.end());
+        }
+
+
+        // ^([\(]{1}[0-9]{3}[\)]{1}[ ]{1}[0-9]{3}[\-]{1}[0-9]{4})$
+        // sample US phone number: (800) 123-4567
+        String phone1 = "1234567890";  // Shouldn't match
+        String phone2 = "(123) 456-7890"; // match
+        String phone3 = "123 456-7890"; // Shouldn't match
+        String phone4 = "(123)456-7890"; // Shouldn't match
+
+        String phoneNumberRegex = "^([\\(]{1}[0-9]{3}[\\)]{1}[ ]{1}[0-9]{3}[\\-]{1}[0-9]{4})$";
+        System.out.println("phone1 = " + phone1.matches(phoneNumberRegex));
+        System.out.println("phone2 = " + phone2.matches(phoneNumberRegex));
+        System.out.println("phone3 = " + phone3.matches(phoneNumberRegex));
+        System.out.println("phone4 = " + phone4.matches(phoneNumberRegex));
+
+        // ^4[0-9]{12}([0-9]{3})?$
+        String visa1 = "4444444444444"; // should match
+        String visa2 = "5444444444444"; // shouldn't match
+        String visa3 = "4444444444444444";  // should match
+        String visa4 = "4444";  // shouldn't match
+
+        String visaRegex = "^4[0-9]{12}([0-9]{3})?$";
+        System.out.println("visa1 " + visa1.matches(visaRegex));
+        System.out.println("visa2 " + visa2.matches(visaRegex));
+        System.out.println("visa3 " + visa3.matches(visaRegex));
+        System.out.println("visa4 " + visa4.matches(visaRegex));
     }
 }
