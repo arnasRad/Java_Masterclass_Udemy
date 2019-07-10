@@ -1,3 +1,6 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Main {
     public static void main(String[] args) {
         String string = "I am a string. Yes, I am.";
@@ -62,5 +65,55 @@ public class Main {
 
         // \\b matches word boundaries (use example - surround each word with some tag etc)
         System.out.println(hasWhitespace.replaceAll("\\b", "X"));
+
+
+        // Video 290
+        String thirdAlphanumeric = "abcDeeeF12Ghhiiiijk199z";
+        System.out.println(thirdAlphanumeric.replaceAll("^abcDe{3}", "YYY"));  // exactly 3 e's
+        System.out.println(thirdAlphanumeric.replaceAll("^abcDe+", "YYY")); // one or more e's
+        System.out.println(thirdAlphanumeric.replaceAll("^abcDe*", "YYY"));  // none or any number of e's
+        System.out.println(thirdAlphanumeric.replaceAll("^abcDe{2,5}", "YYY")); // 2 to 5 e's
+        System.out.println(thirdAlphanumeric.replaceAll("h+i*j", "Y"));
+
+        // Pattern and Matcher
+        StringBuilder htmlText = new StringBuilder("<h1>My Heading</h1>");
+        htmlText.append("<h2>Sub-heading</h2>");
+        htmlText.append("<p>This is a paragraph about something.</p>");
+        htmlText.append("<p>This is another paragraph about something else.</p>");
+        htmlText.append("<h2>Summary</h2>");
+        htmlText.append("<p>Here is the summary</p>");
+
+        String h2Pattern = "<h2>"; // there can be anything before and anything after the <h2> tags
+        Pattern pattern = Pattern.compile(h2Pattern);
+//        Pattern pattern = Pattern.compile(h2Pattern, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE); // case insensitive and unicode case pattern
+        Matcher matcher = pattern.matcher(htmlText);
+        System.out.println(matcher.matches());
+
+        matcher.reset(); // matchers can only be used once!
+        int count = 0;
+        while (matcher.find()) {
+            count++;
+            System.out.println("Occurrence " + count + " : " + matcher.start() + " to " + matcher.end());
+        }
+
+//        String h2GroupPattern = "(<h2>.*</h2>)";
+        // '?' turn greedy quantifier into a lazy quantifier -> stops at the first occurrence of </h2>
+        String h2GroupPattern = "(<h2>.*?</h2>)";
+        Pattern groupPattern = Pattern.compile(h2GroupPattern);
+        Matcher groupMatcher = groupPattern.matcher(htmlText);
+        System.out.println(groupMatcher.matches());
+        groupMatcher.reset();
+
+        while (groupMatcher.find()) {
+            System.out.println("Occurence: " + groupMatcher.group(1));
+        }
+
+        String h2TextGroups = "(<h2>)(.*?)(</h2>)";
+        Pattern h2TextPattern = Pattern.compile(h2TextGroups);
+        Matcher h2TextMatcher = h2TextPattern.matcher(htmlText);
+
+        while(h2TextMatcher.find()) {
+            System.out.println("Occurrence " + h2TextMatcher.group(2));
+        }
     }
 }
