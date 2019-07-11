@@ -1,1 +1,60 @@
 Debugging and Unit Testing
+
+Frames section: shows the execution stack trace
+	* each time a method is called a frame is added to that stack trace
+Restore thread view button (at the right side of intellij UI)
+
+Debugging buttons (left-to-right):
+* Show Excecution Point (Alt + F10): returns the editor to where the 
+											application was suspended
+* Step Over (F8): advances the execution point by one statement and won't 
+							show us what's happening inside any methods
+* Step Into (F7): steps into any methods called by the next statement that's executed;
+		the application will suspend on the first line of the first called method
+							(excluding JDK methods (ie StringBuilder.append() etc)
+* Force Step Into (Alt + Shift + F7): forces the debugger to step into JDK methods
+* Step Out (Shift + F8): used when we want the debugger to run the rest of 
+						the method to return to the caller and then suspend
+* Drop Frame: allows to 'time travel' into the past; rewinds the application 
+	by one frame; mostly used to try out different code paths without having 
+												to restart the application
+* Run To Cursor (Alt + F9): suspends at the line that the cursor is currently located
+
+
+Resume (F9): resumes application and runs it through to the end as long as there's no 
+																	other breakpoints
+View Breakpoints (Ctrl + Shift + F8): shows all current breakpoints
+Rerun (Ctrl + F5): reruns Main program
+
+Variables with 'glasses' next to them are watches
+Watches
+
+Field Watch Point - a type of breakpoint
+We can set a field watchpoint on a variable so that whenever a value of the variable
+	is accessed or updated, the application will suspend
+	
+Advanced debugging:
+* Smart Step Into
+* Set Variable Value ("on the fly")
+* Associate source code to a library (refer video 299)
+
+
+Unit testing.
+
+Unit <-> method (in Java)
+
+To include jUnit into project:
+1. put a cursor on the class you want to test
+2. press Alt+Enter
+3. select 'Create Test' from the pop-up menu
+4. click OK if 'No Test Roots Found' dialog pops up to enable test to be 
+											added to the same source root
+5. select "Testing library: 'JUnit4' "
+6. click 'Fix' button if the line below Testing library says that 
+							the library is not found in the module
+7. select the methods you want to test
+8. click OK
+9. if you see an import error in <ClassToTestName>Test.java file (Assertion etc.):
+	File -> Project Structure -> Modules -> JUnit4 (or 5) -> Scope: 
+	choose 'Compile' -> Apply -> OK
+	
