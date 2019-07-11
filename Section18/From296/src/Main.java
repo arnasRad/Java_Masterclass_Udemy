@@ -7,7 +7,7 @@ public class Main {
         }
         System.out.println(sb);
 
-        String str = "abcdefgh";
+        String str = "abcdefg";
         String result = utils.upperAndPrefix(utils.addSuffix(str));
     }
 }
