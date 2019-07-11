@@ -1,0 +1,133 @@
+Java Concurrency
+
+process - a unit of execution taht has its own memory space
+* many people use terms process and application interchangeably
+
+Each process has its own memory space (heap)
+
+thread - unit of execution within a process
+* in java, every process has at least one thread
+
+Why would you want to use threads:
+1) some tasks take a lot of time so it could be a good idea to 
+					process them in background (on another thread)
+2) API requires to provide threads
+
+concurrency - application doing more than one thing at a time
+
+* you can start an instance of a Thread class only once;
+	will need to create another instance in order to start again
+	
+when to use Thread and Runnable:
+most of the times Runnable is used 
+	- more convenient 
+	- there are a lot of methods in java's implementation that 
+								has Runnable objects as parameters
+								
+Thread terminates when it returns from it's run() method
+
+if Thread.run() is used instead of Thread.start() then the code in 
+		run() will execute on the same Thread it was called from
+	
+join():	
+when you join one thread to a second thread, the first thread waits 
+	for the second thread to terminate and then it continues to execute
+	
+interference - when problems arrise because of thread are 
+			interleaving and accessing the same resources
+'interference' is also known as 'race condition'
+
+synchronization - the process of controlling Thread access to heap
+* it's possible to synchronize methods and statements
+
+when a thread is running an object's synchronized method, no other 
+	thread can run a synchronized method using the same object until 
+	the first thread exits the method it's running
+
+intrinsic lock (monitor)
+
+critical section - code that's referencing a shared resource
+
+thread safe (class or method) - a developer has synchronized all 
+			critical sections within the code
+			
+we should synchronize only the code that needs to be synchronized
+		(that can affect the performance of the application)
+		
+wait(), notify(), notifyAll()
+
+producer - consumer example
+
+a thread cannot be suspended while executing atomic operations
+
+advantages of using unlock() in finally{} block:
+1) we're only putting unlock() in one place
+2) if we have another exception that's not processed in catch{} 
+				block, we're executing unlock() no matter what
+				
+tryLock() - checks whether a lock is available in the thread
+
+thread pool - managed set of threads
+* reduces the overhead of thread creation
+* may limit amount of threads active
+
+
+ArrayBlockingQueue - thread safe
+* FIFO Queue
+
+Deadlocks - two or more threads are blocked on locks and every 
+	thread that's blocked is holding a lock that another thread wants
+
+how to prevent deadlocks:
+	* require that all threads obtain locks in the same order
+	
+Thread starvation - threads rarely get the opportunity to run and progress
+* occurs due to threads priority
+
+Fair locks tries to be FCFS (first come first serve)
+* impacts performace
+
+Live locks - similar to deadlocks except that threads are not blocked but are 
+	waiting for other threads to unblock to be able to continiue it's progress
+		
+Slipped condition
+* a specific type of race condition (aka thread interference)
+* it can occur when a thread can be suspended dbetween reading 
+									a condition and acting on it
+									
+Other Thread Issues
+* atomic actions cannot be suspended
+	- reading and writing reference variables (ie myObject1 = myObject2)
+	- reading and writing primitive variables (except long and double)
+	- reading and writing all variables declared volatile
+* memory consistency error (because of CPU cashing)
+	- volatile variables used to solve the problem. volatile variables' value
+		is immediately updated in memory after a thread updates it's value in 
+		its CPU cache; also it guarantees that every time a variable reads from 
+							a volatile variable, it will get the latest value
+
+* threads using volatile variables needs to be synchronized
+* common use of volatile is with variables of type long and double
+* volatile eliminates the need of synchronization when only one thread can
+	change the value of a shared variable or none of the threads update the 
+	value of a shared variable in a way that depends on its existing value
+* java.util.concurrent.atomic
+	- AtomicInteger
+	- meant to be used in situations when a value is being incremented or decremented
+	
+In JavaFX - use Task class of concurrency
+Recommended way to work with tasks in JavaFX is to use Service class
+It is possible to pass parameters to Task by adding properties to the 
+													Service subclass
+													
+													
+When dealing with a deadlock situation, look for the following:
+1. Is a set of locks being obtained in a different order by multiple threads. If so, can we force all threads to obtain the locks in the same order?
+2. Are we over-synchronizing the code?
+3. Can we rewrite the code to break any circular call patterns?
+4. Would using ReenstrantLock objects help?
+5. Take a look at places where the code calls wait() and see if 
+	that may cause a deadlock. The wait() method results in a 
+	thread releasing a lock before it has exited the synchronized 
+	block, and this premature (albeit temporary) release can lead 
+	to problems if we're not carefult

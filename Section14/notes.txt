@@ -1,0 +1,70 @@
+singleton -> only one instance of a class over the entire run of the application
+on Java Masterclass course section13 DemoApp:
+	* we need to call TodoData.getInstance().getTodoItems() to get the list items
+	* because the class constructor is private we cannot instantiate multiple instances of this class
+ 
+two main approaches when dealing with errors in programming:
+	* LBYL (Look Before You Leap) <- most common in Java
+	* EAFP (it's Easier to Ask Forgiveness than Permission)
+	
+Exception - an event that occurs during the excecution of a program 
+	that disrupts the normal flow of the programs' instructions
+	
+checked exception - when an exception needs to be catched and processed; 
+					you cannnot ignore checked exception
+unchecked exception - an exception does not need to be catched; prints stack trace
+
+NOTE: review Collections section (Maps, Hashmaps and so on...)
+
+finally block - no matter an exception was catcher in a try block or not, 
+					code in finally block will be executed
+					
+
+Serialization - a process of translating a data structure or object into a 
+									format that can be stored and recreated
+* important to set the serial version UID
+	- UID - a sort of a version number for the class
+	- when we read the value from a string, the runtime checks the UID value 
+		for compatibility; if UID in compiled class file does not match the 
+		current UID -> there is a compatibility problem -> invalid class exception thrown
+
+RandomAccessFile theory.
+To access data in the file:
+	1) get the index record for the location
+	2) use the index values to read the location data
+	* every index value needs to be of the same length
+
+Our file format:
+1) This first four bytes will contain the number of locations (bytes 0-3)
+2) The next four bytes will contain the start offset of the locations 
+		section (bytes 4-7)
+3) The next section of the file will contain the index (the index is 
+		1692 bytes long. It will start at byte 8 and end at byte 1699)
+4) The final section of the file will contain the location records (the data). 
+		It will start at byte 1700
+		
+		
+NIO:
+channel - data source to read from or write to
+buffer - a container for a block of data you want to read/write
+selectors - enables a single thread to manage IO from multiple channels
+
+buffers' compacity - a number of elements the buffer can contain
+buffers' position is an index of the next element that should be read or written
+buffers' mark < used with reset() method > if you want to rewind to a certain 
+		position in a buffer you need to mark it and then whenever you use the
+		reset() method the buffer will be set at the marked position
+		
+NOTE: nio 'mantra': when something's go wrong - flip!
+
+
+Pipes:
+used to transfer data between threads
+one-way connection
+
+File System (filesystem): in computing, a Filesystem controls how data is stored 
+							and retrieved (@wiki\filesystem)
+
+File metadata <-> file attributes
+
+File stores <-> drive, volume (Windows OS)

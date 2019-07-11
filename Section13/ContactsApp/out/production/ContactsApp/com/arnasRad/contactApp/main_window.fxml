@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<BorderPane fx:id="mainBorderPane" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arnasRad.contactApp.Controller">
+   <center>
+       <TableView fx:id="contactsTableView" onKeyPressed="#handleKeyPressed">
+         <columns>
+            <TableColumn prefWidth="-1.0" text="First Name" >
+                <cellValueFactory>
+                    <PropertyValueFactory property="firstName"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="-1.0" text="Last Name" >
+                <cellValueFactory>
+                    <PropertyValueFactory property="lastName"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="-1.0" text="Phone Number" >
+                <cellValueFactory>
+                    <PropertyValueFactory property="phoneNumber"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="-1.0" text="Notes" >
+                <cellValueFactory>
+                    <PropertyValueFactory property="notes"/>
+                </cellValueFactory>
+            </TableColumn>
+         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+   </center>
+   <top>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showNewItemDialog" text="New..." />
+                  <MenuItem mnemonicParsing="false" onAction="#showEditItemDialog" text="Edit" />
+              <MenuItem mnemonicParsing="false" onAction="#deleteContactItem" text="Delete" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+</BorderPane>

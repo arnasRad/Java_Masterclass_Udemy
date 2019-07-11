@@ -1,0 +1,9 @@
+Regular expressions
+
+Character classes - represents a set or class of characters
+Boundary matcher - looks for boundaries in a string
+Quantifiers {} specify how often an element in a regular expression can occur
+
+* we can only use matchers once
+
+* look-ahead syntax

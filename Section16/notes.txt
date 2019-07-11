@@ -1,0 +1,68 @@
+Lambda expressions
+
+lambda expressions provides us with an easier way to work with 
+							interfaces that only have one method
+
+Every lambda expression has three parts:
+1. argument list
+2. arrow token
+3. body
+
+functional interfaces - interfaces that only have one method
+
+some developers say that lambda expressions are nothing more than a "syntactic sugar"
+others say that lambdas are java's first step into functional programming
+
+Predicate interface
+
+important interfaces - when to use:
+Consumer
+Supplier
+Predicate - when we want a lambda expression that tests a value and 
+													returns true/false
+Function - when we want a lambda expression in place for method 
+							that accepts an argument and returns a value
+							
+interfaces do not dictate what lambdas must do
+refer video 282, 9:46
+
+for more info on these interfaces refer java Package java.util.function
+
+/*********/
+Streams - sequence of computations
+
+* Stream definition: 
+	a sequence of elements supporting sequential and parallel 
+										aggregate operations
+	- in practice a stream is a set of object references
+	- creates a stream from a collection
+	- stream's source is a collection
+	- stream operations need to meet two requirements:
+		1) not interfering (don't change stream's source in any way)
+		2) it must be stateless (result of operation cannot depend on 
+			any state outside of the operation ie. variable value etc.)
+	- each operation should be seen as an independant step
+
+:: - method reference
+
+Natural ordering (in sorting)
+
+Terminal operation returns either void or a non-stream result
+Intermediate operations returns stream because they don't force the end of the chain
+
+flatMap() method intended use - map one object to many
+called flatMap because it is often used to flatten nested lists
+flatMap is most often used when we want to perform operations on a list
+	but the list isn't the source; for example - object containing a list;
+	we use the method to create a stream of all the objects in those lists
+	
+collect() - terminal operation - collects elements in the stream to a different type of result
+
+reduce() - combines all the items in a stream into a single result
+
+* We can't reuse streams
+* intermediate operations are not performed until there is a terminal operation
+* we can use more specific stream interfaces when we work with lists of numbers
+* there are parallel streams
+
+best practices
