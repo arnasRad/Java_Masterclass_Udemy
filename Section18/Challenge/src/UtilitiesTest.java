@@ -4,11 +4,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class UtilitiesTest {
-    Utilities utils = new Utilities();
+    private static Utilities utils;
 
     @BeforeClass
-    public static void initialize() {
-
+    public static void setup() {
+        utils = new Utilities();
     }
 
     @Test
@@ -93,12 +93,20 @@ public class UtilitiesTest {
     }
 
     @Test
-    public void converter() {
+    public void converter_10_5() {
         int a = 10;
         int b = 5;
         int expected = 300;
         int result = utils.converter(a, b);
         assertEquals(expected, result);
+    }
+
+    @Test(expected = ArithmeticException.class)
+    public void converter_Exception() {
+        int a = 10;
+        int b = 0;
+        utils.converter(a, b);
+        fail("Expected ArithmeticException throw");
     }
 
     @Test
