@@ -33,11 +33,17 @@ public class Utilities {
 
         StringBuilder sb = new StringBuilder();
         char[] string = source.toCharArray();
+        int strLen = string.length;
 
-        for(int i = 0; i < string.length; ++i) {
-            if (string[i] != string[i++]) {
-                sb.append(string[i]);
+        for(int i = 0; i < strLen - 1; ++i) {
+            sb.append(string[i]);
+            if (string[i] == string[i+1]) {
+                ++i;
             }
+        }
+
+        if(string[strLen - 1] != string[strLen - 2]) {
+            sb.append(string[strLen - 1]);
         }
 
         return sb.toString();
