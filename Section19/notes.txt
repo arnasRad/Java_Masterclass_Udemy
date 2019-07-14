@@ -1,0 +1,191 @@
+Databases
+
+Databese normalization - a process of removing redundant, duplicated and 
+										irrelevant data from the tables;
+The more this is done - the higher the normalization
+
+
+type in cmd:
+sqlite3 <db_name>;
+
+example queries:
+CREATE TABLE contacts(name TEXT, phone INTEGER, email TEXT);
+SELECT * FROM contacts;
+INSERT INTO contacts(name, phone, email) VALUES('Tim', 12345, 'tim.buchalka@myemail.com');
+INSERT INTO contacts VALUES('Tim', 12345, 'tim.buchalka@myemail.com');
+.restore testbackup
+UPDATE contacts SET email="tim@myemail.com" WHERE name='Tim';
+DELETE FROM contacts WHERE phone=1234;
+.tables
+.schema
+.dump
+.headers on
+.quit
+
+
+
+
+When columns are indexed, they can be searched much faster
+Ordering of the rows is undefined in relational databases
+Relational db theory is based a lot on set theory
+
+Fields can be declared NOT NULL
+
+autoincrement in SQLite: https://www.sqlite.org/autoinc.html
+
+SELECT * FROM artists ORDER BY name <COLLATE NOCASE> <DESC, ASC>;
+SELECT * FROM songs ORDER BY album, track;
+
+SELECT albums.name, songs.track, songs.title FROM songs JOIN albums 
+		ON songs.album = albums._id ORDER BY albums.name, songs.track;
+INNER JOIN, FULL OUTER JOIN
+
+* Ctrl+C - stop query listing (bug - might quit sqlite too)
+
+* challenge.
+	- produce a list of all artists, with their albums, 
+					in alphabetical order of artist name.
+SELECT artists.name, albums.name 
+	FROM albums INNER JOIN artists 
+		ON albums.artist = artists._id
+	ORDER BY artists.name;
+	
+SELECT artists.name, albums.name, songs.track, songs.title FROM songs
+	INNER JOIN albums ON songs.album = albums._id
+	INNER JOIN artists ON albums.artist = artists._id
+	ORDER BY artists.name, albums.name, songs.track;
+	
+* WHERE should go before the ORDER BY clause:
+SELECT artists.name, albums.name, songs.track, songs.title FROM songs
+	INNER JOIN albums ON songs.album = albums._id
+	INNER JOIN artists ON albums.artist = artists._id
+	WHERE albums._id = 19
+	ORDER BY artists.name, albums.name, songs.track;
+	
+In cmd:
+* copy - select text and press enter; 
+* paste - Ctrl+V
+
+Wildcards
+SELECT artists.name, albums.name, songs.track, songs.title FROM songs
+	INNER JOIN albums ON songs.album = albums._id
+	INNER JOIN artists ON albums.artist = artists._id
+	WHERE songs.title LIKE "%doctor%" 		<-- wildcard. lists all the songs that has 'doctor' in a title.
+	ORDER BY artists.name, albums.name, songs.track;
+	
+SELECT artists.name, albums.name, songs.track, songs.title FROM songs
+	INNER JOIN albums ON songs.album = albums._id
+	INNER JOIN artists ON albums.artist = artists._id
+	WHERE artists.name LIKE "jefferson%" 		<-- artist's name starts with jefferson
+	ORDER BY artists.name, albums.name, songs.track;
+
+* Stored procedures
+
+Views
+* can't insert etc., but can query them
+CREATE VIEW artist_list AS
+   SELECT artists.name, albums.name, songs.track, songs.title FROM songs
+   INNER JOIN albums ON songs.album = albums._id
+   INNER JOIN artists ON albums.artist = artists._id
+   ORDER BY artists.name, albums.name, songs.track;
+   
+SELECT * FROM artist_list;
+SELECT * FROM artist_list WHERE name LIKE "jefferson%";
+
+DROP VIEW artist_list;
+
+* name view fields:
+CREATE VIEW artist_list AS
+   SELECT artists.name AS artist, albums.name AS album, songs.track, songs.title FROM songs
+   INNER JOIN albums ON songs.album = albums._id
+   INNER JOIN artists ON albums.artist = artists._id
+   ORDER BY artists.name, albums.name, songs.track;
+  
+
+DELETE FROM songs WHERE track < 50;
+SELECT * FROM songs WHERE track <> 71;
+
+Functions:
+SELECT COUNT(*) FROM songs;
+
+Challenge:
+1* Select the titles of all the songs on the album "Forbidden"
+SELECT albums.name, songs.title FROM albums
+   INNER JOIN songs ON albums._id = songs.album
+   WHERE albums.name = "Forbidden";
+   
+2* Repeat the previous query but this time display the songs in 
+	track order. You may want to include the track number in the 
+							output to verify that it worked ok.
+SELECT albums.name, songs.track, songs.title FROM albums
+   INNER JOIN songs ON albums._id = songs.album
+   WHERE albums.name = "Forbidden"
+   ORDER BY songs.track;
+   
+3* Display all songs for the band "Deep Purple".
+SELECT artists.name, songs.track, songs.title FROM songs
+   INNER JOIN albums ON songs.album = albums._id
+   INNER JOIN artists ON albums.artist = artists._id
+   WHERE artists.name = "Deep Purple";
+   
+4* Rename the band "Mehitabel" to "One Kitten". 
+	Note that this is an exception to the advice to always fully 
+	qualify your column names. SET artists.name won't work, you 
+									just need to specify name.
+UPDATE artists SET name = 'One Kitten' 
+	WHERE name='Mehitabel';
+									
+5* Check that the record was correctly renamed
+SELECT * FROM artists WHERE name = 'Mehitabel';
+SELECT * FROM artists WHERE name = 'One Kitten';
+
+6* Select the titles of all the songs by Aerosmith in alphabetical 
+	order. Include only the title in the output.
+SELECT songs.title FROM songs
+   INNER JOIN albums ON songs.album = albums._id
+   INNER JOIN artists ON albums.artist = artists._id
+   WHERE artists.name = "Aerosmith"
+   ORDER BY songs.title;
+   
+7* Replace the column that you used in the previous answer with 
+	count(title) to get just a count of the nubmer of songs.
+SELECT COUNT(title) FROM songs
+   INNER JOIN albums ON songs.album = albums._id
+   INNER JOIN artists ON albums.artist = artists._id
+   WHERE artists.name = "Aerosmith"
+   ORDER BY songs.title;
+   
+8* Search the internet to find out how to get a list of the songs 
+	from step 6 without any duplicates.
+SELECT DISTINCT songs.title FROM songs
+   INNER JOIN albums ON songs.album = albums._id
+   INNER JOIN artists ON albums.artist = artists._id
+   WHERE artists.name = "Aerosmith"
+   ORDER BY songs.title;
+   
+9* Search the internet again to find out how to get a count of 
+	the songs without duplicates. HINT: it uses the same keyword 
+					as step 8 but the syntax may not be obvious.
+SELECT COUNT(DISTINCT title) FROM songs
+   INNER JOIN albums ON songs.album = albums._id
+   INNER JOIN artists ON albums.artist = artists._id
+   WHERE artists.name = "Aerosmith"
+   ORDER BY songs.title;
+   
+10* Repeat the previous query to find the number of artists 
+	(which, obviously, should be one) and the number of albums.
+SELECT COUNT(DISTINCT artists.name), COUNT(DISTINCT title) FROM songs
+   INNER JOIN albums ON songs.album = albums._id
+   INNER JOIN artists ON albums.artist = artists._id
+   WHERE artists.name = "Aerosmith"
+   ORDER BY songs.title;
+   
+   
+JDBC - Java Database Connectivity
+JDBC is like a middleman between application and datasource
+* derby JDBC driver
+
+Add SQLite JDBC driver to the project:
+1. File -> Project Structure -> Libraries -> + -> Java -> *SQLite JDBC .jar file path*
+
+We can connect to database using DriverManager or DataSource classes
