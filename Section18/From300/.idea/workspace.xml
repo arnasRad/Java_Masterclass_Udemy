@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2a9637a6-6ee7-4109-9749-91a679e1461c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Challenge/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Challenge/src/UtilitiesTestParameterized.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Challenge/src/UtilitiesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Challenge/src/UtilitiesTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="2a9637a6-6ee7-4109-9749-91a679e1461c" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,7 +31,7 @@
         <entry file="file://$PROJECT_DIR$/src/BankAccountTestParameterized.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
-              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -85,7 +81,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -102,6 +97,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -186,6 +182,7 @@
       <updated>1562913646338</updated>
       <workItem from="1562913647487" duration="673000" />
       <workItem from="1562929254518" duration="603000" />
+      <workItem from="1563087701076" duration="691000" />
     </task>
     <task id="LOCAL-00001" summary="End of video 303">
       <created>1562914296714</created>
@@ -194,7 +191,14 @@
       <option name="project" value="LOCAL" />
       <updated>1562914296714</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="End of video 303">
+      <created>1563087773879</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1563087773879</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -206,20 +210,19 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1276000" />
+    <option name="totallyTimeSpent" value="1967000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="2" y="8" width="971" height="1011" extended-state="1" />
+    <frame x="952" y="7" width="971" height="1011" extended-state="0" />
     <layout>
       <window_info id="Image Layers" order="0" />
       <window_info id="Designer" order="1" />
       <window_info id="UI Designer" order="2" />
       <window_info id="Learn" order="3" />
       <window_info id="Capture Tool" order="4" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.2546652" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.26015368" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="0" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
@@ -232,7 +235,7 @@
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="10" />
       <window_info anchor="bottom" id="Messages" order="11" />
-      <window_info anchor="right" id="Maven" />
+      <window_info anchor="bottom" id="Docker" order="12" show_stripe_button="false" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
       <window_info anchor="right" id="Theme Preview" order="1" />
       <window_info anchor="right" id="Palette&#9;" order="2" />
@@ -242,6 +245,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="6" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="7" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="9" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -275,7 +279,7 @@
     <entry file="file://$PROJECT_DIR$/src/BankAccountTestParameterized.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
-          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
