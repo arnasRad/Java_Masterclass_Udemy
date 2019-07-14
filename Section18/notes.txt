@@ -57,4 +57,20 @@ To include jUnit into project:
 9. if you see an import error in <ClassToTestName>Test.java file (Assertion etc.):
 	File -> Project Structure -> Modules -> JUnit4 (or 5) -> Scope: 
 	choose 'Compile' -> Apply -> OK
+10*. other way to do step 9 is to place the cursor on the word that's 
+	error-marked (red font) -> Alt+Enter -> select "Add 'JUnit<>' to classpath ->
+	-> click OK in the pop-up menu.
 	
+Create a seperate Run configuration for tests:
+1. right-click anywhere outside of methods in your Test class
+2. select "Create 'TestClassName'..." option
+3. click OK in a pop-up menu (for default run configuration options)
+
+* Every test should run independently
+* More than one assertion in a test is a BAD PRACTICE
+* Good practice: test method name should give some indication of 
+							the actual condition they are testing
+							
+
+Parameterized testing.
+Helps avoid a lot of repetetive code
