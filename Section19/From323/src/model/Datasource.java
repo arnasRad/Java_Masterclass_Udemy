@@ -2,6 +2,7 @@ package model;
 
 import jdk.swing.interop.SwingInterOpUtils;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,33 +74,54 @@ public class Datasource {
                     TABLE_ALBUMS + "." + COLUMN_ALBUM_NAME + " COLLATE NOCASE ";
 
     public static final String TABLE_ARTIST_SONG_VIEW = "artist_list";
-    public static final String CREATE_ARTIST_FOR_SONG_VIEW = "CREATE VIEW IF NOT EXISTS " +
-            TABLE_ARTIST_SONG_VIEW + " AS SELECT " + TABLE_ARTISTS + "." + COLUMN_ARTIST_NAME +
-            ", " + TABLE_ALBUMS + "." + COLUMN_ALBUM_NAME + " AS " + COLUMN_SONG_ALBUM + ", " +
-            TABLE_SONGS + "." + COLUMN_SONG_TRACK + ", " + TABLE_SONGS + "." + COLUMN_SONG_TITLE +
-            " FROM " + TABLE_SONGS + " INNER JOIN " + TABLE_ALBUMS + " ON " + TABLE_SONGS +
-            "." + COLUMN_SONG_ALBUM + " = " + TABLE_ALBUMS + "." + COLUMN_ALBUM_ID +
-            " INNER JOIN " + TABLE_ARTISTS + " ON " + TABLE_ALBUMS + "." + COLUMN_ALBUM_ARTIST +
-            " = " + TABLE_ARTISTS + "." + COLUMN_ARTIST_ID +
-            " ORDER BY " + TABLE_ARTISTS + "." + COLUMN_ARTIST_NAME + ", " +
-            TABLE_ALBUMS + "." + COLUMN_ALBUM_NAME + ", " +
-            TABLE_SONGS + "." + COLUMN_SONG_TRACK;
+    public static final String CREATE_ARTIST_FOR_SONG_VIEW =
+            "CREATE VIEW IF NOT EXISTS " + TABLE_ARTIST_SONG_VIEW +
+                    " AS SELECT " + TABLE_ARTISTS + "." + COLUMN_ARTIST_NAME +
+                    " AS " + COLUMN_ARTIST_NAME + ", " + TABLE_ALBUMS + "." + COLUMN_ALBUM_NAME +
+                    " AS " + COLUMN_SONG_ALBUM + ", " + TABLE_SONGS + "." + COLUMN_SONG_TRACK +
+                    ", " + TABLE_SONGS + "." + COLUMN_SONG_TITLE +
+                    " FROM " + TABLE_SONGS + " INNER JOIN " + TABLE_ALBUMS + " ON " + TABLE_SONGS +
+                    "." + COLUMN_SONG_ALBUM + " = " + TABLE_ALBUMS + "." + COLUMN_ALBUM_ID +
+                    " INNER JOIN " + TABLE_ARTISTS + " ON " + TABLE_ALBUMS + "." + COLUMN_ALBUM_ARTIST +
+                    " = " + TABLE_ARTISTS + "." + COLUMN_ARTIST_ID +
+                    " ORDER BY " + TABLE_ARTISTS + "." + COLUMN_ARTIST_NAME + ", " +
+                    TABLE_ALBUMS + "." + COLUMN_ALBUM_NAME + ", " +
+                    TABLE_SONGS + "." + COLUMN_SONG_TRACK;
+
+    public static final String DROP_ARTIST_FOR_SONG_VIEW =
+            "DROP VIEW " + TABLE_ARTIST_SONG_VIEW;
+
+    public static final String QUERY_VIEW_SONG_INFO =
+            "SELECT " + COLUMN_ARTIST_NAME + ", " +
+                    COLUMN_SONG_ALBUM + ", " + COLUMN_SONG_TRACK +
+                    " FROM " + TABLE_ARTIST_SONG_VIEW +
+                    " WHERE " + COLUMN_SONG_TITLE + " = \"";
+
+    public static final String QUERY_VIEW_SONG_INFO_PREP = "SELECT " + COLUMN_ARTIST_NAME + ", " +
+            COLUMN_SONG_ALBUM + ", " + COLUMN_SONG_TRACK + " FROM " + TABLE_ARTIST_SONG_VIEW +
+            " WHERE " + COLUMN_SONG_TITLE + " = ?";
 
     private Connection conn;
+    private PreparedStatement querySongInfoView;
 
     public boolean open() {
         // can use try-with-resources for simplicity
         try {
             conn = DriverManager.getConnection(CONNECTION_STRING);
+            querySongInfoView = conn.prepareStatement(QUERY_VIEW_SONG_INFO_PREP);
             return true;
         } catch(SQLException e) {
-            System.err.println("Couldn't connect ot database: " + e.getMessage());
+            System.err.println("Couldn't connect to database: " + e.getMessage());
             return false;
         }
     }
 
     public void close() {
         try {
+            if (querySongInfoView != null) {
+                querySongInfoView.close();
+            }
+
             if (conn != null) {
                 conn.close();
             }
@@ -239,6 +261,8 @@ public class Datasource {
         }
     }
 
+    // SELECT name, album, track FROM artist_list WHERE title = "title";
+
     public void querySongsMetadata() {
         String sql = "SELECT * FROM " + TABLE_SONGS;
 
@@ -277,6 +301,46 @@ public class Datasource {
         try (Statement statement = conn.createStatement()) {
 
             statement.execute(CREATE_ARTIST_FOR_SONG_VIEW);
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Create View failed: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public List<SongArtist> querySongInfoView(String title) {
+        StringBuilder sb = new StringBuilder(QUERY_VIEW_SONG_INFO);
+        sb.append(title);
+        sb.append("\"");
+
+        System.out.println(sb.toString());
+
+        try {
+            querySongInfoView.setString(1, title);
+            ResultSet results = querySongInfoView.executeQuery();
+
+            List<SongArtist> songArtists = new ArrayList<>();
+            while (results.next()) {
+                SongArtist songArtist = new SongArtist();
+                songArtist.setArtistName(results.getString(1));
+                songArtist.setAlbumName(results.getString(2));
+                songArtist.setTrack(results.getInt(3));
+                songArtists.add(songArtist);
+            }
+
+            return songArtists;
+        } catch (SQLException e) {
+            System.out.println("Query failed: " + e.getMessage());
+            return null;
+        } finally {
+
+        }
+    }
+
+    public boolean dropSongInfoView() {
+        try (Statement statement = conn.createStatement()) {
+
+            statement.execute(DROP_ARTIST_FOR_SONG_VIEW);
             return true;
         } catch (SQLException e) {
             System.out.println("Create View failed: " + e.getMessage());

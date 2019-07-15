@@ -189,3 +189,20 @@ Add SQLite JDBC driver to the project:
 1. File -> Project Structure -> Libraries -> + -> Java -> *SQLite JDBC .jar file path*
 
 We can connect to database using DriverManager or DataSource classes
+
+Configure data sources for code assistance: https://www.jetbrains.com/help/idea/database-tool-window.html
+
+! Close all connections to the database once application finishes (close order matters)
+
+A new statement instance is required for each select query statement
+Statement object can only have one active result set associated with it
+
+CRUD operations - Create Read Update Delete
+
+SQL injection attack
+
+querying tables by index (not field name) is more efficient
+
+* Query Metadata
+
+Use PreparedStatement for SQL injection attack prevention
