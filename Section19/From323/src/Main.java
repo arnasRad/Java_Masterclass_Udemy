@@ -64,14 +64,24 @@ public class Main {
 
         // potential SQL Injection attack
         // for example, user may enter 'Go Your Own Way" or 1=1 or "' as input
+
+        //querySong(datasource);
+
+//        datasource.insertSong("Touch of Grey", "Grateful Dead", "In The Dark", 1);
+//        datasource.insertSong("Like A Rolling Stone", "Bob Dylan", "Bob Dylan's Greatest Hits", 1);
+        datasource.insertSong("Bird Dog", "Everly Brothers", "All-Time Greatest Hits", 7);
+
+        datasource.close();
+    }
+
+    private static void querySong(Datasource datasource) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter a song title: ");
         String title = scanner.nextLine();
 
-        songArtists = datasource.querySongInfoView(title);
+        List<SongArtist> songArtists = datasource.querySongInfoView(title);
         if (songArtists == null || songArtists.isEmpty()) {
             System.out.println("Couldn't find the artist for the song");
-            return;
         }
 
         for(SongArtist songArtist : songArtists) {
@@ -79,7 +89,5 @@ public class Main {
                     ", Album name = " + songArtist.getAlbumName() +
                     ", Track number = " + songArtist.getTrack());
         }
-
-        datasource.close();
     }
 }
