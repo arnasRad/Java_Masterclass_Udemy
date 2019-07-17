@@ -51,3 +51,36 @@ socket - one end-point of the two-way connection.
 handshaking - specific messages that needs to be sent in order to establish a 
 									connection between the client and the server
 packet - data in specific format that's transmitted over the network
+
+UDP (User Datagram Protocol) - requires no handshaking
+UDP is sometimes referred to as 'connectionless protocol'
+use it when:
+* there's no need for reliable or two-way connection
+* speed is essential
+
+video streaming / skype etc.
+used for time-sensitive communication
+
+URI (Uniform Resource Identifier) - a string of characters that unambiguously 
+	identifies a particular resource
+URL (Uniform Resource Locator), or web address, is a reference to a web resource
+	that specifies its location on a computer network and a mechanism for 
+	retrieving it.
+	
+Difference between URI and URL (in Java high level APIs):
+	* URI is an identifier that might not provide enough information to access
+		the resource it identifies
+	* URL is an identifier that includes information about how to access the 
+		resource it identifies
+In other words, URI can specify a relative path, but URL has to be an absolute path
+
+Recommended practice is to use a URI until you actually want to access a resource 
+	and then to convert the URI to a URL
+
+scheme is the part of a URI or URL that appears before the colon
+Relevant high-level API classes: URI, URL, URLConnection, HttpURLConnection
+
+absolute URI specify scheme
+relative URI doesn't specify scheme
+
+! URI can be relative, but URL must be absolute
