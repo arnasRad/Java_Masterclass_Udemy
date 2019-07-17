@@ -205,4 +205,41 @@ querying tables by index (not field name) is more efficient
 
 * Query Metadata
 
-Use PreparedStatement for SQL injection attack prevention
+PreparedStatement benefits:
+	* Potentaial performance benefit;
+	* SQL injection attack protection
+How to use PreparedStatement:
+1. Declare a constant for the SQL statement that contains the placeholders
+2. Create a PreparedStatement instance using Connection.prepareStatement(sqlStmtString)
+3. When we're ready to perform the query (or the insert, update, delete),
+	we call the appropriate setter methods to set the placeholders to the 
+	values we want to use in the statement
+4. We run the statement using PreparedStatement.execute() or PreparedStatement.executeQuery()
+5. We process the results the same way we do when using a regular old Statement
+
+Transactions
+* transaction - a sequence of SQL statements that are treated as a single logical unit.
+	If any of the statements fail, the results of any previous statements in the 
+	transaction can be rolled back, or just not saved.
+
+commit <-> save (when referring to making any changes permanent)
+
+DB transactions must be ACID-compliant:
+1. Atomicity
+2. Consistency
+3. Isolation
+4. Durability
+
+essentially transactions ensure the integrity of the data within a database
+
+Used commands for transactions in SQLite:
+1. BEGIN TRANSACTION
+2. END TRANSACTION
+3. COMMIT
+4. ROLLBACK
+
+if we close a connection before we commit any outstanding changes, the 
+												changes are rolled back
+
+Singleton pattern (for Datasource class)
+We use it when we want our application to have only one instance of a particular class

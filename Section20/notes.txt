@@ -1,0 +1,53 @@
+Java Networking Programming
+
+Network - a system of computers connected together so they can 
+share resources and communicate with each other.
+
+Networking - how the connected computers communicate
+
+Intranet - private network
+
+host <-> a machine or device that's taking part in networking
+
+client/server - a common network configuration. One (or more) hosts 
+on the network are acting as servers, and the other hosts are clients 
+that connect to the server
+
+local web development - run apache or IIS server
+
+transport protocol - a protocol that's used for computers to 
+communicate with each other. Example protocols: TCP, UDP.
+
+Port:
+Generally, a computer has one physical connection to a network. But the
+same computer may be running multiple applications that want data from the
+network.
+Ports are used to route incoming data from the network to the target application.
+Each application that needs data from the network is assigned a port
+When data arrives from the network, the port number is used to route the data to 
+											the application that's waiting for it
+											
+IPv4 (Internet Protocol Version 4). Uses 32-bit address scheme. Not enough for all 
+		the devices on the Internet. Written as four integers and separated by dots.
+IPv6 (Internet Protocol Version 6). Uses 128-bit address scheme. Written in hex and 
+																separated by colons
+
+IP (Internet Protocol)
+TCP/IP - using TCP protocol with IP address
+localhost 127.0.0.1 is usually used to identify the host when the client and server 
+																are on the same host
+
+TCP (Transmission Control Protocol) establishes a two-way connection between hosts.
+sequence of events when communicating using TCP/IP:
+	1. the client opens a connection to the server
+	2. the client sends a request to the server
+	3. the server sends a response to the client
+	4. the client closes the connection to the server
+steps 2-3 may be repeated multiple times
+
+socket - one end-point of the two-way connection. 
+	Client has a socket and server has a socket
+
+handshaking - specific messages that needs to be sent in order to establish a 
+									connection between the client and the server
+packet - data in specific format that's transmitted over the network
