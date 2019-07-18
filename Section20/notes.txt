@@ -84,3 +84,16 @@ absolute URI specify scheme
 relative URI doesn't specify scheme
 
 ! URI can be relative, but URL must be absolute
+
+HttpUrlConnection:
+GET
+* when a browser asks for a web page, it executes a GET request
+* the server that hosts the page will then respond, and the 
+								response will include a code
+* this return code is called the response code
+POST
+* POST operation is used when you want to provide information to URL
+
+popular HTTP protocol third-party libaries:
+* jetty
+* Apache HTTPClient

@@ -8,7 +8,9 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) {
         try {
-            URL url = new URL("http://example.org");
+//            URL url = new URL("http://example.org");
+//            URL url = new URL("http://example.org/somepage.html");
+            URL url = new URL("https://www.flickr.com/services/feeds/photos_public.gne?tags=dogs");
 
 //            URLConnection urlConnection = url.openConnection();
             HttpURLConnection connection= (HttpURLConnection) url.openConnection();
@@ -21,6 +23,7 @@ public class Main {
 
             if (responseCode != 200) {
                 System.err.println("Error reading web page");
+                System.err.println("Response message: " + connection.getResponseMessage());
                 return;
             }
 
